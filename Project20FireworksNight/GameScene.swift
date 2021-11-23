@@ -66,7 +66,7 @@ class GameScene: SKScene {
         path.move(to: .zero)
         path.addLine(to: CGPoint(x: xMovement, y: 1000))
         
-        let move = SKAction.follow(path.cgPath, asOffset: true, orientToPath: true, speed: 200)
+        let move = SKAction.follow(path.cgPath, asOffset: true, orientToPath: true, speed: 150)
         node.run(move)
         
         if let emitter = SKEmitterNode(fileNamed: "fuse") {
@@ -197,10 +197,6 @@ class GameScene: SKScene {
         }
     }
     
-    override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
-        guard let skView = view as? SKView else { return }
-        guard let gameScene = skView.scene as? GameScene else { return }
-        gameScene.explodeFireworks()
-    }
+    
     
 }
