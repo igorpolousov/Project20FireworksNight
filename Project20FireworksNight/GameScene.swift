@@ -26,8 +26,14 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         
+        scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
+        scoreLabel.position = CGPoint(x: 160, y: 160)
+        scoreLabel.horizontalAlignmentMode = .left
+        scoreLabel.fontColor = .red
+        addChild(scoreLabel)
+        
         let background = SKSpriteNode(imageNamed: "background")
-        background.position = CGPoint(x: 512, y: 385)
+        background.position = CGPoint(x: 512, y: 384)
         background.blendMode = .replace
         background.zPosition = -1
         addChild(background)
