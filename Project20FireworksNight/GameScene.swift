@@ -25,9 +25,9 @@ class GameScene: SKScene {
     }
     
     override func didMove(to view: SKView) {
-        
+     
         scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
-        scoreLabel.position = CGPoint(x: 160, y: 160)
+        scoreLabel.position = CGPoint(x: 36, y: 36)
         scoreLabel.horizontalAlignmentMode = .left
         scoreLabel.fontColor = .red
         addChild(scoreLabel)
@@ -38,8 +38,10 @@ class GameScene: SKScene {
         background.zPosition = -1
         addChild(background)
         
-        gameTimer = Timer(timeInterval: 6, target: self, selector: #selector(launchFireworks), userInfo: nil, repeats: true)
+        gameTimer = Timer.scheduledTimer(timeInterval: 6, target: self, selector: #selector(launchFireworks), userInfo: nil, repeats: true)
       
+        score = 0
+        
     }
     
     func createFireworks(xMovement: CGFloat, x: Int, y: Int) {
