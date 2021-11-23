@@ -36,12 +36,13 @@ class GameScene: SKScene {
     // Переменная с подсчетом очков со свойством наблюдателя
     var score = 0 {
         didSet {
+            // Задание 1
             scoreLabel.text = "Score: \(score)"
         }
     }
     
     override func didMove(to view: SKView) {
-        
+        // Задание 1
         scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
         scoreLabel.position = CGPoint(x: 36, y: 36)
         scoreLabel.horizontalAlignmentMode = .left
@@ -53,7 +54,7 @@ class GameScene: SKScene {
         background.blendMode = .replace
         background.zPosition = -1
         addChild(background)
-        
+        // Задание 2
         newGameLabel = SKLabelNode(fontNamed: "Chalkduster")
         newGameLabel.position = CGPoint(x: 16, y: 700)
         newGameLabel.horizontalAlignmentMode = .left
@@ -120,7 +121,7 @@ class GameScene: SKScene {
     }
     
     @objc func launchFireworks() {
-        // Проверка счетчика запусков
+        // Проверка счетчика запусков, задание 2
         if launchesCounter < 5 {
             launchesCounter += 1
             print(launchesCounter)
@@ -159,6 +160,7 @@ class GameScene: SKScene {
             default:
                 break
             }
+            // Задание 2
             // Если количество запусков 5 или больше тогда game over
         } else {
             gameOver = true
@@ -203,7 +205,7 @@ class GameScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         checkTouches(touches)
-        
+        // Задание 2
         // Проверка касания к newGame для запуска новой игры
         guard let touch = touches.first else { return }
         let location = touch.location(in: self)
@@ -239,6 +241,7 @@ class GameScene: SKScene {
     
     // Указание что будет с ракетой если будет взрыв
     func explode(firework: SKNode) {
+        // Задание 3
         let duration = SKAction.wait(forDuration: 1)
         let remove = SKAction.removeFromParent()
         let sequence = SKAction.sequence([duration, remove])
