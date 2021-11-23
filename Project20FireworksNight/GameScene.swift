@@ -11,6 +11,12 @@ import SpriteKit
 class GameScene: SKScene {
     
     var scoreLabel: SKLabelNode!
+    
+    var newGameLabel: SKLabelNode!
+    var gameOverLabel: SKLabelNode!
+    var gameOver = false
+    var launchesCounter = 0
+    
     var gameTimer: Timer?
     var fireworks = [SKNode]()
     
@@ -38,11 +44,27 @@ class GameScene: SKScene {
         background.zPosition = -1
         addChild(background)
         
-        gameTimer = Timer.scheduledTimer(timeInterval: 6, target: self, selector: #selector(launchFireworks), userInfo: nil, repeats: true)
+        newGameLabel = SKLabelNode(fontNamed: "Chalkduster")
+        newGameLabel.position = CGPoint(x: 16, y: 700)
+        newGameLabel.horizontalAlignmentMode = .left
+        newGameLabel.fontColor = .red
+        newGameLabel.text = "New Game"
+        addChild(newGameLabel)
+        
+      startStopTimer()
       
         score = 0
         
     }
+    
+    func startStopTimer() {
+        if !gameOver {
+            gameTimer = Timer.scheduledTimer(timeInterval: 6, target: self, selector: #selector(launchFireworks), userInfo: nil, repeats: true)
+        } else {
+            gameTimer?.invalidate()
+        }
+    }
+    
     
     func createFireworks(xMovement: CGFloat, x: Int, y: Int) {
         let node = SKNode()
@@ -79,6 +101,11 @@ class GameScene: SKScene {
     }
     
     @objc func launchFireworks() {
+        
+        if launchesCounter < 5 {
+        launchesCounter += 1
+        print(launchesCounter)
+        
         let movementAmount: CGFloat = 1800
         
         switch Int.random(in: 0...3) {
@@ -114,6 +141,16 @@ class GameScene: SKScene {
         default:
             break
         }
+        } else {
+            gameOver = true
+            startStopTimer()
+            gameOverLabel = SKLabelNode(fontNamed: "Chalkduster")
+            gameOverLabel.position = CGPoint(x: 150, y: 400)
+            gameOverLabel.text = "Game Over"
+            gameOverLabel.fontSize = 120
+            gameOverLabel.horizontalAlignmentMode = .left
+            addChild(gameOverLabel)
+        }
     }
     
     func checkTouches(_ touches: Set<UITouch>) {
@@ -140,6 +177,18 @@ class GameScene: SKScene {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
+        guard let touch = touches.first else { return }
+        let location = touch.location(in: self)
+        let object = nodes(at: location)
+        
+        if gameOver && object.contains(newGameLabel) {
+            score = 0
+            launchesCounter = 0
+            gameOver = false
+            gameOverLabel.removeFromParent()
+            startStopTimer()
+        }
+        
         checkTouches(touches)
     }
     
