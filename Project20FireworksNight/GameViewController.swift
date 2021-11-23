@@ -46,7 +46,7 @@ class GameViewController: UIViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
-    
+    // Если пользователь делал движения устройством, то вызывается функция взорвать ракеты  
     override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard let skView = view as? SKView else { return }
         guard let gameScene = skView.scene as? GameScene else { return }
